@@ -329,7 +329,7 @@ const AdminTaskTable: React.FC<AdminTaskTableProps> = ({
             {formattedSearch && formattedSearch.length > 0 ? (
               formattedSearch.map((task, index) => (
                 <tr key={index} className="border-y">
-                  <td className="sticky left-0 min-w-[150px] bg-white px-3 dark:bg-[#30324e] md:w-[150px]">
+                  <td className="sticky left-0 min-w-[150px] bg-white px-3 dark:bg-[#30324e] md:w-[150px] underline underline-offset-2">
                     <div
                       onClick={() => toggleModal(task)}
                       className="cursor-pointer"
