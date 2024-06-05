@@ -22,7 +22,7 @@ const SignUp: React.FC = () => {
 
     try {
 
-       Check if email is from @chitrakoota.com domain
+      //  Check if email is from @chitrakoota.com domain
        if (!email.toLowerCase().endsWith('@chitrakoota.com')) {
         toast.error("Please use a valid @chitrakoota.com email address.");
         setLoading(false);
