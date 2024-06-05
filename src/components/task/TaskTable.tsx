@@ -328,7 +328,7 @@ const TaskTable: React.FC<TaskTableProps> = ({
             {formattedSearch && formattedSearch.length > 0 ? (
               formattedSearch.map((task, index) => (
                 <tr key={index} className="border-y">
-                  <td className="sticky left-0 min-w-[160px] bg-white px-3 dark:bg-[#30324e] md:w-[160px]">
+                  <td className="sticky left-0 min-w-[160px] bg-white px-3 dark:bg-[#30324e] md:w-[160px] underline underline-offset-2">
                     <div
                       onClick={() => toggleModal(task)}
                       className="cursor-pointer"
