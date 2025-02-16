@@ -284,7 +284,7 @@ const AdminTaskTable: React.FC<AdminTaskTableProps> = ({
               <th className="sticky top-0  border-r bg-white px-4  py-1 dark:bg-[#30324e]">
                 Assignee
               </th>
-              <th className="sticky top-0 border-r bg-white px-4  py-1  dark:bg-[#30324e]">
+              <th className="sticky top-0 border-r bg-white px-4  py-1 dark:bg-[#30324e]">
                 Sub Assignee
               </th>
               <th className="] sticky top-0 border-r bg-white  px-4 py-1 dark:bg-[#30324e]">
@@ -446,9 +446,9 @@ const AdminTaskTable: React.FC<AdminTaskTableProps> = ({
                           Completed
                         </option>
                         <option value="Stuck" className="bg-[#df2f4a]">
-                          Stuck
+                          Perpetual
                         </option>
-                      </select> //done colouring
+                      </select>
                     ) : (
                       <div
                         className={`w-full py-[8px] text-center ${
@@ -463,8 +463,8 @@ const AdminTaskTable: React.FC<AdminTaskTableProps> = ({
                                   : ""
                         }`}
                       >
-                        {task.PricipleStatus}
-                      </div> //done colouring
+                        {task.PricipleStatus === "Stuck" ? "Perpetual" : task.PricipleStatus}
+                      </div>
                     )}
                   </td>
                   <td className="w-[150px] border text-black dark:text-white ">
@@ -481,7 +481,7 @@ const AdminTaskTable: React.FC<AdminTaskTableProps> = ({
                                 : ""
                       }`}
                     >
-                      {task.status}
+                      {task.status === "Stuck" ? "Perpetual" : task.status}
                     </div>
                   </td>
 

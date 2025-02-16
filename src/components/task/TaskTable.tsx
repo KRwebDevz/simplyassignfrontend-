@@ -283,7 +283,7 @@ const TaskTable: React.FC<TaskTableProps> = ({
               <th className="sticky top-0  border-r bg-white px-4  py-1 dark:bg-[#30324e]">
                 Assignee
               </th>
-              <th className="sticky top-0 border-r bg-white px-4  py-1  dark:bg-[#30324e]">
+              <th className="sticky top-0 border-r bg-white px-4  py-1 dark:bg-[#30324e]">
                 Sub Assignee
               </th>
               <th className="] sticky top-0 border-r bg-white  px-4 py-1 dark:bg-[#30324e]">
@@ -328,12 +328,12 @@ const TaskTable: React.FC<TaskTableProps> = ({
             {formattedSearch && formattedSearch.length > 0 ? (
               formattedSearch.map((task, index) => (
                 <tr key={index} className="border-y">
-                  <td className="sticky left-0 min-w-[160px] bg-white px-3 dark:bg-[#30324e] md:w-[160px] underline underline-offset-2">
+                  <td className="sticky left-0 min-w-[360px] bg-white px-3 dark:bg-[#30324e] md:w-[160px] underline underline-offset-2">
                     <div
                       onClick={() => toggleModal(task)}
                       className="cursor-pointer"
                     >
-                      {truncateString(task.title, 15)}
+                      {truncateString(task.title, 40)}
                     </div>
                   </td>
                   <td className="min-w-[150px] border px-3 md:w-[160px]">
@@ -446,7 +446,7 @@ const TaskTable: React.FC<TaskTableProps> = ({
                           Completed
                         </option>
                         <option value="Stuck" className="bg-[#df2f4a]">
-                          Stuck
+                          Perpetual
                         </option>
                       </select> //done colouring
                     ) : (
@@ -486,25 +486,19 @@ const TaskTable: React.FC<TaskTableProps> = ({
                           handleStatusChange(task._id, e.target.value)
                         }
                       >
-                        <option
-                          value="Not Started"
-                          className="status-ns bg-[#c4c4c4]"
-                        >
+                        <option value="Not Started" className="status-ns bg-[#c4c4c4]">
                           Not Started
                         </option>
-                        <option
-                          value="In Progress"
-                          className="status-InProgress bg-[#fdab3d]"
-                        >
+                        <option value="In Progress" className="status-InProgress bg-[#fdab3d]">
                           In Progress
                         </option>
                         <option value="Completed" className="bg-[#00c875]">
                           Completed
                         </option>
                         <option value="Stuck" className="bg-[#df2f4a]">
-                          Stuck
+                          Perpetual
                         </option>
-                      </select> //done colouring
+                      </select>
                     ) : (
                       <div
                         className={`w-[150px] py-[8px] text-center ${
@@ -519,8 +513,8 @@ const TaskTable: React.FC<TaskTableProps> = ({
                                   : ""
                         }`}
                       >
-                        {task.status}
-                      </div> //done colouring
+                        {task.status === "Stuck" ? "Perpetual" : task.status}
+                      </div>
                     )}
                   </td>
 
