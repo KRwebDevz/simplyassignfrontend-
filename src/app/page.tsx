@@ -502,14 +502,14 @@ const Page: React.FC = () => {
 
         <div className="flex  text-black dark:text-white">
           <div className="overflow-auto">
-            <div className=" ">
+{/*             <div className=" ">
               <div className="mb-4 font-sansita text-4xl font-bold">
                 Welcome, {firstName}
               </div>
               <div className="text-gray-50 font-sansita text-2xl font-semibold">
                 Task Management DashBoard
               </div>
-            </div>
+            </div> */}
 
             <div className="mb-8 mt-10">
               <div className="flex flex-wrap gap-6">
