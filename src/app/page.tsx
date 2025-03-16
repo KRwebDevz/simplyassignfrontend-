@@ -164,14 +164,15 @@ const Page: React.FC = () => {
 
       if (response.status === 200) {
         console.log("User Response Data:", response.data);
-        setTasks(response.data.tasks);
+        setTasks([...response.data.tasks].reverse());
         setFilterAppilied(true);
       }
 
       if (adminResponse.status === 200) {
         console.log("Admin Response Data:", adminResponse.data);
-        setAdminTasks(adminResponse.data.tasks);
-        setOriginalAdminTasks(adminResponse.data.tasks);
+        const reversedAdminTasks = [...adminResponse.data.tasks].reverse();
+        setAdminTasks(reversedAdminTasks);
+        setOriginalAdminTasks(reversedAdminTasks);
         setFilterAppilied(true);
       }
     } catch (error) {
@@ -189,8 +190,9 @@ const Page: React.FC = () => {
           },
         },
       );
-      setAdminTasks(adminTasksResponse.data.tasks);
-      setOriginalAdminTasks(adminTasksResponse.data.tasks); // Update original tasks
+      const reversedTasks = [...adminTasksResponse.data.tasks].reverse();
+      setAdminTasks(reversedTasks);
+      setOriginalAdminTasks(reversedTasks); // Update original tasks
       console.log(adminTasksResponse.data.tasks);
       setLoading(false);
     } catch (error) {
@@ -342,7 +344,7 @@ const Page: React.FC = () => {
 
       if (response.ok) {
         const data = await response.json();
-        setTasks(data.tasks);
+        setTasks([...data.tasks].reverse());
         console.log(data.tasks);
 
         setLoading(false);

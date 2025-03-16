@@ -339,14 +339,14 @@ const TaskTable: React.FC<TaskTableProps> = ({
                   <td className="min-w-[150px] border px-3 md:w-[160px]">
                     <span className="">
                       {task?.assigned
-                        ? ` ${task.assignedBy.first_name}  ${task?.assignedBy?.roll_no}  `
+                        ? ` ${task.assignedBy.first_name.charAt(0)}${task.assignedBy.last_name.charAt(0)}  ${task?.assignedBy?.roll_no}  `
                         : "Not Assigned"}
                     </span>
                   </td>
                   <td className="min-w-[130px] border px-3 md:w-[120px]">
                     <span className="">
                       {task?.assigned
-                        ? ` ${task.assigned.first_name}  ${task?.assigned?.roll_no}  `
+                        ? ` ${task.assigned.first_name.charAt(0)}${task.assigned.last_name.charAt(0)}  ${task?.assigned?.roll_no}  `
                         : "Not Assigned"}
                     </span>
                   </td>
