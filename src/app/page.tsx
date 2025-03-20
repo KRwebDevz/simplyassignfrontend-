@@ -513,7 +513,7 @@ const Page: React.FC = () => {
               </div>
             </div> */}
 
-            <div className="mb-8 mt-10">
+            <div className="mb-8 mt-2">
               <div className="flex flex-wrap gap-6">
                 {/* this is filters */}
                 <Options
@@ -612,7 +612,7 @@ const Page: React.FC = () => {
           {selectedOption === "assigned by you" ? (
             <div>
               {user && user.role === "admin" ? (
-                <div className="mt-10">
+                <div className="mt-2">
                   {/* <div className="mb-2 flex flex-col lg:flex-row lg:items-center"> */}
                   <div className="">
                     {/* <h1 className="mb-5 font-sansita text-2xl font-semibold text-black dark:text-white lg:mb-0">
