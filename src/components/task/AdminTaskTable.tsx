@@ -271,7 +271,7 @@ const AdminTaskTable: React.FC<AdminTaskTableProps> = ({
           </div>
         )}
       </div>
-      <div className="mt-12 h-[280px] w-full overflow-auto rounded-2xl border-t md:mt-5">
+      <div className="mt-12 h-[500px] w-full overflow-auto rounded-2xl border-t md:mt-5">
         <table className="w-full table-auto rounded-2xl border-b border-l border-r bg-white text-black dark:bg-[#30324e] dark:text-[#d5d8df]">
           <thead className="rounded-xl text-[15px] ">
             <tr className="rounded-md  border-b bg-white dark:bg-[#30324e]">
@@ -337,21 +337,21 @@ const AdminTaskTable: React.FC<AdminTaskTableProps> = ({
                       {truncateString(task.title, 18)}
                     </div>
                   </td>
-                  <td className="min-w-[130px] border px-3 md:w-[120px]">
+                  <td className="min-w-[100px] border px-3 ">
                     <span className="">
                       {task?.assigned
                         ? ` ${task.assignedBy.first_name.charAt(0)}${task.assignedBy.last_name.charAt(0)}  ${task?.assignedBy?.roll_no}  `
                         : "Not Assigned"}
                     </span>
                   </td>
-                  <td className="min-w-[130px] border px-3 md:w-[120px]">
+                  <td className="min-w-[100px] border px-3">
                     <span className="">
                       {task?.assigned
                         ? `${task.assigned.first_name.charAt(0)}${task.assigned.last_name.charAt(0)}  ${task?.assigned?.roll_no}  `
                         : "Not Assigned"}
                     </span>
                   </td>
-                  <td className="min-w-[130px] border px-2 md:w-[120px]">
+                  <td className="min-w-[130px] border px-2">
                     <select
                       value={task.subassigned?._id || ""}
                       onChange={(e) =>
@@ -384,7 +384,7 @@ const AdminTaskTable: React.FC<AdminTaskTableProps> = ({
                         ))}
                     </select>
                   </td>
-                  <td className="min-w-[150px] border px-4 text-center md:w-[150px]">
+                  <td className="min-w-[100px] border px-4 text-center">
                     <p>{formatDeadline(task.deadline)}</p>
                   </td>
 
@@ -488,7 +488,7 @@ const AdminTaskTable: React.FC<AdminTaskTableProps> = ({
                   <td className="w-[100px] border">
                     <button
                       onClick={() => toggleModal(task)}
-                      className="h-full w-[150px] font-bold text-black dark:text-white"
+                      className="h-full w-[95px] font-bold text-black dark:text-white"
                     >
                       Open
                     </button>

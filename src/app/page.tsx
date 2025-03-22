@@ -502,7 +502,7 @@ const Page: React.FC = () => {
       <DefaultLayout>
         <Toaster />
 
-        <div className="flex  text-black dark:text-white">
+        <div className="flex text-black dark:text-white">
           <div className="overflow-auto">
 {/*             <div className=" ">
               <div className="mb-4 font-sansita text-4xl font-bold">
@@ -513,7 +513,7 @@ const Page: React.FC = () => {
               </div>
             </div> */}
 
-            <div className="mb-8 mt-2">
+            <div className="mb-8">
               <div className="flex flex-wrap gap-6">
                 {/* this is filters */}
                 <Options

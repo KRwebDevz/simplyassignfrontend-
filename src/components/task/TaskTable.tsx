@@ -270,7 +270,7 @@ const TaskTable: React.FC<TaskTableProps> = ({
           </div>
         )}
       </div>
-      <div className="mt-12 h-[280px] w-full overflow-auto rounded-2xl border-t  md:mt-5 ">
+      <div className="mt-12 h-[500px] w-full overflow-auto rounded-2xl border-t  md:mt-5 ">
         <table className="w-full table-auto rounded-2xl border-b border-l border-r bg-white  text-black dark:bg-[#30324e] dark:text-[#d5d8df]">
           <thead className="rounded-xl text-[15px] ">
             <tr className="rounded-md  border-b bg-white dark:bg-[#30324e]">
@@ -328,7 +328,7 @@ const TaskTable: React.FC<TaskTableProps> = ({
             {formattedSearch && formattedSearch.length > 0 ? (
               formattedSearch.map((task, index) => (
                 <tr key={index} className="border-y">
-                  <td className="sticky left-0 min-w-[360px] bg-white px-3 dark:bg-[#30324e] md:w-[160px] underline underline-offset-2">
+                  <td className="sticky left-0 min-w-[320px] bg-white px-3 dark:bg-[#30324e] md:w-[160px] underline underline-offset-2">
                     <div
                       onClick={() => toggleModal(task)}
                       className="cursor-pointer"
@@ -336,27 +336,27 @@ const TaskTable: React.FC<TaskTableProps> = ({
                       {truncateString(task.title, 40)}
                     </div>
                   </td>
-                  <td className="min-w-[150px] border px-3 md:w-[160px]">
+                  <td className="min-w-[95px] border px-3">
                     <span className="">
                       {task?.assigned
                         ? ` ${task.assignedBy.first_name.charAt(0)}${task.assignedBy.last_name.charAt(0)}  ${task?.assignedBy?.roll_no}  `
                         : "Not Assigned"}
                     </span>
                   </td>
-                  <td className="min-w-[130px] border px-3 md:w-[120px]">
+                  <td className="min-w-[95px] border px-3">
                     <span className="">
                       {task?.assigned
                         ? ` ${task.assigned.first_name.charAt(0)}${task.assigned.last_name.charAt(0)}  ${task?.assigned?.roll_no}  `
                         : "Not Assigned"}
                     </span>
                   </td>
-                  <td className="min-w-[130px] border px-2 md:w-[120px]">
+                  <td className="min-w-[100px] border px-2 md:w-[120px]">
                     <select
                       value={task.subassigned?._id || ""}
                       onChange={(e) =>
                         handleSubAssignChange(task._id, e.target.value)
                       }
-                      className="w-[130px] rounded bg-transparent p-1"
+                      className="w-[100px] rounded bg-transparent p-1"
                     >
                       {/* <option value="" className=" bg-boxdark text-white">
                         {task.subassigned
@@ -383,11 +383,11 @@ const TaskTable: React.FC<TaskTableProps> = ({
                         ))}
                     </select>
                   </td>
-                  <td className="min-w-[150px] border px-4 text-center md:w-[150px]">
+                  <td className="min-w-[98px] border px-4 text-center">
                     <p>{formatDeadline(task.deadline)}</p>
                   </td>
 
-                  <td className="min-w-[150px] border px-4 text-center md:w-[150px]">
+                  <td className="min-w-[100px] border px-4 text-center">
                     {user && user.role !== "principle" ? (
                       task.updatedDeadline ? (
                         <p>{formatDeadline(task.updatedDeadline)}</p>
@@ -521,7 +521,7 @@ const TaskTable: React.FC<TaskTableProps> = ({
                   <td className="w-[100px] border">
                     <button
                       onClick={() => toggleModal(task)}
-                      className="h-full w-[150px] font-bold text-black dark:text-white"
+                      className="h-full w-[95px] font-bold text-black dark:text-white"
                     >
                       Open
                     </button>
