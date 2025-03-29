@@ -410,10 +410,10 @@ const Options: React.FC<OptionsProps> = ({
 
       {(userRole === "principle" || userRole === "admin") && (
         <div
-          className="cursor-pointer rounded-lg bg-gradient-to-r from-violet-600 to-[#B140FF] p-2 px-4 text-white"
+          className="cursor-pointer rounded-lg bg-gradient-to-r from-violet-600 to-[#B140FF] py-1 px-3 md:p-2 md:px-4 text-white"
           onClick={openTaskModal}
         >
-          New task
+          <span className="text-[13px]">New Task</span>
         </div>
       )}
 
@@ -440,10 +440,10 @@ const Options: React.FC<OptionsProps> = ({
         </div>
       ) : (
         <div
-          className="text-gray-100 border-gray-50 cursor-pointer rounded-lg border px-4 py-2"
+          className="text-gray-100 border-gray-50 cursor-pointer rounded-lg border py-1 px-3 md:p-2 md:px-4"
           onClick={openFilterModal}
         >
-          Filter
+          <span className="text-[13px]">Filter</span>
         </div>
       )}
 
