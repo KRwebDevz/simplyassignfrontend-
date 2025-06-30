@@ -91,7 +91,7 @@ const Page: React.FC = () => {
   const [search, setSearch] = useState<string>("");
   const [filterOption, setFilterOption] = useState<string>("");
   const [adminTasks, setAdminTasks] = useState<Task[]>([]);
-  const [statusFilter, setStatusFilter] = useState("");
+  const [statusFilter, setStatusFilter] = useState<string | string[]>("");
   const [usernameFilter, SetUsernameFilter] = useState("");
   const [filterApplied, setFilterAppilied] = useState<boolean>(false);
   const [sort, setSort] = useState<string>("");
@@ -121,20 +121,27 @@ const Page: React.FC = () => {
 
   const filterUserUnique: FilterUser[] = filterUser.filter(
     (v, i, a) => a.findIndex((t) => t.id === v.id) === i,
-  );
-
-  useEffect(() => {
-    if (statusFilter) {
-      filterTaskSubmit();
+  );  useEffect(() => {
+    // This useEffect is kept for other triggers, but immediate checkbox changes are handled in Options component
+    if (statusFilter && ((Array.isArray(statusFilter) && statusFilter.length > 0) || (typeof statusFilter === 'string' && statusFilter !== ""))) {
+      // Only trigger if not already triggered by immediate checkbox action
+      const timeoutId = setTimeout(() => {
+        filterTaskSubmit();
+      }, 200);
+      
+      return () => clearTimeout(timeoutId);
     }
   }, [statusFilter]);
 
   const { user } = useAuth();
-
   const filterTaskSubmit = async () => {
     try {
+      // Allow filtering even if only statusFilter is empty (when unchecking all status filters)
       if (!usernameFilter && !statusFilter && !sort) {
-        toast.error("Select a filter");
+        // If no filters are applied, fetch all tasks instead of showing error
+        await fetchTasks();
+        await adminfetchTasks();
+        setFilterAppilied(false);
         return;
       }
 
@@ -142,7 +149,15 @@ const Page: React.FC = () => {
       const baseAdminApi = `${process.env.NEXT_PUBLIC_SERVER_URL}/api/tasks/filter-tasks-by-admin`;
       const queryParams = [];
 
-      if (statusFilter) queryParams.push(`status=${statusFilter}`);
+      if (statusFilter) {
+        if (Array.isArray(statusFilter)) {
+          // Multiple status values - send as comma-separated string
+          queryParams.push(`status=${statusFilter.join(',')}`);
+        } else {
+          // Single status value
+          queryParams.push(`status=${statusFilter}`);
+        }
+      }
       if (usernameFilter) queryParams.push(`userID=${usernameFilter}`);
       if (sort) queryParams.push(`sort=${sort}`);
 
