@@ -3,6 +3,7 @@ import FileIcon from "@/components/FileIcon";
 import toast from "react-hot-toast";
 import { useAuth } from "@/context/AuthContext";
 import { MdDelete } from "react-icons/md";
+import { ChevronUp, ChevronDown } from "lucide-react";
 import axios from "axios";
 
 interface Assigned {
@@ -95,6 +96,8 @@ const TaskTable: React.FC<TaskTableProps> = ({
   const [editDescription, setEditDescription] = useState("");
   const [editDeadline, setEditDeadline] = useState("");
   const [editAssignee, setEditAssignee] = useState("");
+  const [sortField, setSortField] = useState<string>("");
+  const [sortDirection, setSortDirection] = useState<"asc" | "desc">("asc");
 
   const formatDeadline = (deadline: string | null): string => {
     if (!deadline) return "";
@@ -104,12 +107,71 @@ const TaskTable: React.FC<TaskTableProps> = ({
     const year = String(date.getFullYear()).slice(-2);
     return `${day}/${month}/${year}`;
   };
-
   const formattedSearch = search
     ? tasks.filter((task) => {
         return task.title.toLowerCase().includes(search.toLowerCase());
       })
     : tasks;
+
+  const handleSort = (field: string) => {
+    if (sortField === field) {
+      setSortDirection(sortDirection === "asc" ? "desc" : "asc");
+    } else {
+      setSortField(field);
+      setSortDirection("asc");
+    }
+  };
+
+  const sortedTasks = [...formattedSearch].sort((a, b) => {
+    if (!sortField) return 0;
+    
+    let aValue: any = "";
+    let bValue: any = "";
+    
+    switch (sortField) {
+      case "title":
+        aValue = a.title.toLowerCase();
+        bValue = b.title.toLowerCase();
+        break;
+      case "assignor":
+        aValue = a.assignedBy ? `${a.assignedBy.first_name} ${a.assignedBy.last_name}`.toLowerCase() : "";
+        bValue = b.assignedBy ? `${b.assignedBy.first_name} ${b.assignedBy.last_name}`.toLowerCase() : "";
+        break;
+      case "assignee":
+        aValue = a.assigned ? `${a.assigned.first_name} ${a.assigned.last_name}`.toLowerCase() : "";
+        bValue = b.assigned ? `${b.assigned.first_name} ${b.assigned.last_name}`.toLowerCase() : "";
+        break;
+      case "deadline":
+        aValue = a.deadline ? new Date(a.deadline).getTime() : 0;
+        bValue = b.deadline ? new Date(b.deadline).getTime() : 0;
+        break;
+      case "updatedDeadline":
+        aValue = a.updatedDeadline ? new Date(a.updatedDeadline).getTime() : 0;
+        bValue = b.updatedDeadline ? new Date(b.updatedDeadline).getTime() : 0;
+        break;
+      case "principleStatus":
+        aValue = a.PricipleStatus.toLowerCase();
+        bValue = b.PricipleStatus.toLowerCase();
+        break;
+      case "status":
+        aValue = a.status.toLowerCase();
+        bValue = b.status.toLowerCase();
+        break;
+      default:
+        return 0;
+    }
+    
+    if (aValue < bValue) return sortDirection === "asc" ? -1 : 1;
+    if (aValue > bValue) return sortDirection === "asc" ? 1 : -1;
+    return 0;
+  });  const getSortIcon = (field: string) => {
+    if (sortField !== field) return null;
+    return sortDirection === "asc" ? (
+      <ChevronUp size={16} className="inline-block" />
+    ) : (
+      <ChevronDown size={16} className="inline-block" />
+    );
+  };
 
   function truncateString(str: string, num: number): string {
     // If the length of the string is less than or equal to the number, return the string.
@@ -271,35 +333,71 @@ const TaskTable: React.FC<TaskTableProps> = ({
         )}
       </div>
       <div className="mt-12 h-[500px] w-full overflow-auto rounded-2xl border-t  md:mt-5 ">
-        <table className="w-full table-auto rounded-2xl border-b border-l border-r bg-white  text-black dark:bg-[#30324e] dark:text-[#d5d8df]">
-          <thead className="rounded-xl text-[15px] ">
+        <table className="w-full table-auto rounded-2xl border-b border-l border-r bg-white  text-black dark:bg-[#30324e] dark:text-[#d5d8df]">          <thead className="rounded-xl text-[15px] ">
             <tr className="rounded-md  border-b bg-white dark:bg-[#30324e]">
-              <th className="sticky left-0 top-0 z-10 border-r bg-white  px-4  py-1  dark:bg-[#30324e]">
-                Task
+              <th 
+                className="sticky left-0 top-0 z-10 border-r bg-white px-4 py-1 cursor-pointer hover:bg-gray-50 dark:bg-[#30324e] dark:hover:bg-[#404262]"
+                onClick={() => handleSort("title")}
+              >                <div className="flex items-center justify-between">
+                  Task
+                  <span className="ml-1">{getSortIcon("title")}</span>
+                </div>
               </th>
-              <th className="sticky top-0  border-r bg-white px-4  py-1 dark:bg-[#30324e]">
-                Assignor
+              <th 
+                className="sticky top-0 border-r bg-white px-4 py-1 cursor-pointer hover:bg-gray-50 dark:bg-[#30324e] dark:hover:bg-[#404262]"
+                onClick={() => handleSort("assignor")}
+              >                <div className="flex items-center justify-between">
+                  Assignor
+                  <span className="ml-1">{getSortIcon("assignor")}</span>
+                </div>
               </th>
-              <th className="sticky top-0  border-r bg-white px-4  py-1 dark:bg-[#30324e]">
-                Assignee
+              <th 
+                className="sticky top-0 border-r bg-white px-4 py-1 cursor-pointer hover:bg-gray-50 dark:bg-[#30324e] dark:hover:bg-[#404262]"
+                onClick={() => handleSort("assignee")}
+              >                <div className="flex items-center justify-between">
+                  Assignee
+                  <span className="ml-1">{getSortIcon("assignee")}</span>
+                </div>
               </th>
-              <th className="sticky top-0 border-r bg-white px-4  py-1 dark:bg-[#30324e]">
+              <th className="sticky top-0 border-r bg-white px-4 py-1 dark:bg-[#30324e]">
                 Sub Assignee
               </th>
-              <th className="] sticky top-0 border-r bg-white  px-4 py-1 dark:bg-[#30324e]">
-                Assignor Deadline
+              <th 
+                className="sticky top-0 border-r bg-white px-4 py-1 cursor-pointer hover:bg-gray-50 dark:bg-[#30324e] dark:hover:bg-[#404262]"
+                onClick={() => handleSort("deadline")}
+              >                <div className="flex items-center justify-between">
+                  Assignor Deadline
+                  <span className="ml-1">{getSortIcon("deadline")}</span>
+                </div>
               </th>
-              <th className="sticky top-0 border-r bg-white px-4  py-1  dark:bg-[#30324e]">
-                Assignee Deadline
+              <th 
+                className="sticky top-0 border-r bg-white px-4 py-1 cursor-pointer hover:bg-gray-50 dark:bg-[#30324e] dark:hover:bg-[#404262]"
+                onClick={() => handleSort("updatedDeadline")}
+              >
+                <div className="flex items-center justify-between">
+                  Assignee Deadline
+                  <span className="ml-1 text-xs">{getSortIcon("updatedDeadline")}</span>
+                </div>
               </th>
-              <th className="sticky top-0 border-r  bg-white px-4 py-1  dark:bg-[#30324e]">
-                Assignor Status
+              <th 
+                className="sticky top-0 border-r bg-white px-4 py-1 cursor-pointer hover:bg-gray-50 dark:bg-[#30324e] dark:hover:bg-[#404262]"
+                onClick={() => handleSort("principleStatus")}
+              >
+                <div className="flex items-center justify-between">
+                  Assignor Status
+                  <span className="ml-1 text-xs">{getSortIcon("principleStatus")}</span>
+                </div>
               </th>
-              <th className="sticky top-0 border-r bg-white px-4 py-1  dark:bg-[#30324e]">
-                Assignee Status
+              <th 
+                className="sticky top-0 border-r bg-white px-4 py-1 cursor-pointer hover:bg-gray-50 dark:bg-[#30324e] dark:hover:bg-[#404262]"
+                onClick={() => handleSort("status")}
+              >
+                <div className="flex items-center justify-between">
+                  Assignee Status
+                  <span className="ml-1 text-xs">{getSortIcon("status")}</span>
+                </div>
               </th>
-
-              <th className="sticky top-0 border-r bg-white  px-4 py-1 dark:bg-[#30324e]">
+              <th className="sticky top-0 border-r bg-white px-4 py-1 dark:bg-[#30324e]">
                 More Details
               </th>
               {user?.role === "principle" && (
@@ -323,10 +421,9 @@ const TaskTable: React.FC<TaskTableProps> = ({
                 </th>
               )}
             </tr>
-          </thead>
-          <tbody className="w-[1400px] text-[15px]">
-            {formattedSearch && formattedSearch.length > 0 ? (
-              formattedSearch.map((task, index) => (
+          </thead>          <tbody className="w-[1400px] text-[15px]">
+            {sortedTasks && sortedTasks.length > 0 ? (
+              sortedTasks.map((task, index) => (
                 <tr key={index} className="border-y">
                   <td className="sticky -left-1 min-w-[320px] border-black/75 dark:border-white bg-white px-3 dark:bg-[#30324e] md:w-[160px] underline underline-offset-2">
                     <div
